@@ -83,7 +83,7 @@ public class PessoaDAL implements IDAL<Pessoa>{
         }
         sql += sql.replace("#1", dados[0]);
         sql += sql.replace("#2", dados[1]);
-        return DB.getCon().manipular("");
+        return DB.getCon().manipular(sql);
     }
 
     @Override

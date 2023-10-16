@@ -11,30 +11,31 @@ public class PessoaDAL implements IDAL<Pessoa>{
     public boolean gravar(Pessoa entidade) {
         String sql = "insert into ";
         if (entidade instanceof Dentista) {
-           sql += "dentista values (default,'#1',#2,'#3','#4')";
-           sql += sql.replace("#1", entidade.getNome());
-           sql += sql.replace("#2", ""+((Dentista) entidade).getCro());
-           sql += sql.replace("#3", ((Dentista) entidade).getFone());
-           sql += sql.replace("#4", ((Dentista) entidade).getEmail());
+            sql += "dentista (den_id, den_nome, den_cro, den_fone, den_email) values (default, '#1', #2, '#3', '#4')";
+            sql = sql.replace("#1", entidade.getNome())
+                    .replace("#2", String.valueOf(((Dentista) entidade).getCro()))
+                    .replace("#3", ((Dentista) entidade).getFone())
+                    .replace("#4", ((Dentista) entidade).getEmail());
         } else if (entidade instanceof Usuario) {
-            sql += "usuario values (default,'#1',#2,'#3')";
-            sql += sql.replace("#1", entidade.getNome());
-            sql += sql.replace("#2", ""+((Usuario) entidade).getNivel());
-            sql += sql.replace("#3", ((Usuario) entidade).getSenha());
+            sql += "usuario (uso_id, uso_nome, uso_nivel, uso_senha) values (default, '#1', #2, '#3')";
+            sql = sql.replace("#1", entidade.getNome())
+                    .replace("#2", String.valueOf(((Usuario) entidade).getNivel()))
+                    .replace("#3", ((Usuario) entidade).getSenha());
         } else {
-            sql += "paciente values (default,'#1','#2','#3','#4','#5','#6','#7','#8','#9','#A','#B')";
-            sql += sql.replace("#1", ((Paciente) entidade).getCpf());
-            sql += sql.replace("#2", entidade.getNome());
-            sql += sql.replace("#3", ((Paciente) entidade).getCep());
-            sql += sql.replace("#4", ((Paciente) entidade).getRua());
-            sql += sql.replace("#5", ((Paciente) entidade).getNumero());
-            sql += sql.replace("#6", ((Paciente) entidade).getBairro());
-            sql += sql.replace("#7", ((Paciente) entidade).getCep());
-            sql += sql.replace("#8", ((Paciente) entidade).getUf());
-            sql += sql.replace("#9", ((Paciente) entidade).getFone());
-            sql += sql.replace("#A", ((Paciente) entidade).getEmail());
-            sql += sql.replace("#B", ((Paciente) entidade).getHisto());
+            sql += "paciente (pac_id, pac_cpf, pac_nome, pac_cep, pac_rua, pac_numero, pac_bairro, pac_cep, pac_uf, pac_fone, pac_email, pac_histo) values (default, '#1', '#2', '#3', '#4', '#5', '#6', '#7', '#8', '#9', '#A', '#B')";
+            sql = sql.replace("#1", ((Paciente) entidade).getCpf())
+                    .replace("#2", entidade.getNome())
+                    .replace("#3", ((Paciente) entidade).getCep())
+                    .replace("#4", ((Paciente) entidade).getRua())
+                    .replace("#5", ((Paciente) entidade).getNumero())
+                    .replace("#6", ((Paciente) entidade).getBairro())
+                    .replace("#7", ((Paciente) entidade).getCep())
+                    .replace("#8", ((Paciente) entidade).getUf())
+                    .replace("#9", ((Paciente) entidade).getFone())
+                    .replace("#A", ((Paciente) entidade).getEmail())
+                    .replace("#B", ((Paciente) entidade).getHisto());
         }
+        System.out.println(sql);
         return DB.getCon().manipular(sql);
     }
 

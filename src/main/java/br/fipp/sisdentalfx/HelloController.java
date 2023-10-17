@@ -1,14 +1,31 @@
 package br.fipp.sisdentalfx;
 
+import javafx.application.Application;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 
-public class HelloController {
-    @FXML
-    private Label welcomeText;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-    @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
+public class HelloController implements Initializable {
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+    }
+
+    public void onAdm(MouseEvent mouseEvent) {
+
+    }
+
+    public void onSecretaria(MouseEvent mouseEvent) {
+    }
+
+    public void onDentista(MouseEvent mouseEvent) {
+    }
+
+    public void onConfig(MouseEvent mouseEvent) {
     }
 }

@@ -4,38 +4,41 @@ import br.fipp.sisdentalfx.db.entidades.*;
 import br.fipp.sisdentalfx.db.util.DB;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PessoaDAL implements IDAL<Pessoa>{
     @Override
     public boolean gravar(Pessoa entidade) {
-        String sql = "insert into ";
-        if (entidade instanceof Dentista) {
-            sql += "dentista (den_id, den_nome, den_cro, den_fone, den_email) values (default, '#1', #2, '#3', '#4')";
-            sql = sql.replace("#1", entidade.getNome())
-                    .replace("#2", String.valueOf(((Dentista) entidade).getCro()))
-                    .replace("#3", ((Dentista) entidade).getFone())
-                    .replace("#4", ((Dentista) entidade).getEmail());
-        } else if (entidade instanceof Usuario) {
-            sql += "usuario (uso_id, uso_nome, uso_nivel, uso_senha) values (default, '#1', #2, '#3')";
-            sql = sql.replace("#1", entidade.getNome())
-                    .replace("#2", String.valueOf(((Usuario) entidade).getNivel()))
-                    .replace("#3", ((Usuario) entidade).getSenha());
-        } else {
-            sql += "paciente (pac_id, pac_cpf, pac_nome, pac_cep, pac_rua, pac_numero, pac_bairro, pac_cep, pac_uf, pac_fone, pac_email, pac_histo) values (default, '#1', '#2', '#3', '#4', '#5', '#6', '#7', '#8', '#9', '#A', '#B')";
-            sql = sql.replace("#1", ((Paciente) entidade).getCpf())
-                    .replace("#2", entidade.getNome())
-                    .replace("#3", ((Paciente) entidade).getCep())
-                    .replace("#4", ((Paciente) entidade).getRua())
-                    .replace("#5", ((Paciente) entidade).getNumero())
-                    .replace("#6", ((Paciente) entidade).getBairro())
-                    .replace("#7", ((Paciente) entidade).getCep())
-                    .replace("#8", ((Paciente) entidade).getUf())
-                    .replace("#9", ((Paciente) entidade).getFone())
-                    .replace("#A", ((Paciente) entidade).getEmail())
-                    .replace("#B", ((Paciente) entidade).getHisto());
+        String sql="insert into ";
+        if(entidade instanceof Dentista)
+        {
+            sql+="dentista values (default,'#1',#2,'#3','#4')";
+            sql=sql.replace("#1",entidade.getNome());
+            sql=sql.replace("#2",""+((Dentista) entidade).getCro());
+            sql=sql.replace("#3",((Dentista) entidade).getFone());
+            sql=sql.replace("#4",((Dentista) entidade).getEmail());
         }
-        System.out.println(sql);
+        else if(entidade instanceof Usuario){
+            sql+="usuario values (default,'#1',#2,'#3')";
+            sql=sql.replace("#1",entidade.getNome());
+            sql=sql.replace("#2",""+((Usuario) entidade).getNivel());
+            sql=sql.replace("#3",((Usuario) entidade).getSenha());
+        }
+        else {
+            sql += "paciente values (default,'#1','#2','#3','#4','#5','#6','#7','#8','#9','#A','#B')";
+            sql = sql.replace("#1", ((Paciente) entidade).getCpf());
+            sql = sql.replace("#2", entidade.getNome());
+            sql = sql.replace("#3", ((Paciente) entidade).getCep());
+            sql = sql.replace("#4", ((Paciente) entidade).getRua());
+            sql = sql.replace("#5", ((Paciente) entidade).getNumero());
+            sql = sql.replace("#6", ((Paciente) entidade).getBairro());
+            sql = sql.replace("#7", ((Paciente) entidade).getCidade());
+            sql = sql.replace("#8", ((Paciente) entidade).getUf());
+            sql = sql.replace("#9", ((Paciente) entidade).getFone());
+            sql = sql.replace("#A", ((Paciente) entidade).getEmail());
+            sql = sql.replace("#B", ((Paciente) entidade).getHisto());
+        }
         return DB.getCon().manipular(sql);
     }
 
@@ -44,28 +47,28 @@ public class PessoaDAL implements IDAL<Pessoa>{
         String sql = "update ";
         if (entidade instanceof Dentista) {
             sql += "dentista set den_nome='#1',den_cro=#2,den_fone='#3',den_email='#4' where den_id="+entidade.getId();
-            sql += sql.replace("#1", entidade.getNome());
-            sql += sql.replace("#2", ""+((Dentista) entidade).getCro());
-            sql += sql.replace("#3", ((Dentista) entidade).getFone());
-            sql += sql.replace("#4", ((Dentista) entidade).getEmail());
+            sql = sql.replace("#1", entidade.getNome());
+            sql = sql.replace("#2", ""+((Dentista) entidade).getCro());
+            sql = sql.replace("#3", ((Dentista) entidade).getFone());
+            sql = sql.replace("#4", ((Dentista) entidade).getEmail());
         } else if (entidade instanceof Usuario) {
             sql += "usuario set uso_nome='#1',uso_nivel=#2,uso_senha='#3' where uso_id="+entidade.getId();
-            sql += sql.replace("#1", entidade.getNome());
-            sql += sql.replace("#2", ""+((Usuario) entidade).getNivel());
-            sql += sql.replace("#3", ((Usuario) entidade).getSenha());
+            sql = sql.replace("#1", entidade.getNome());
+            sql = sql.replace("#2", ""+((Usuario) entidade).getNivel());
+            sql = sql.replace("#3", ((Usuario) entidade).getSenha());
         } else {
             sql += "paciente set pac_cpf='#1',pac_nome='#2',pac_cep='#3',pac_rua='#4',pac_numero='#5',pac_bairro='#6',pac_cep='#7',pac_uf='#8',pac_fone='#9',pac_email='#A',pac_histo='#B' where pac_id="+entidade.getId();
-            sql += sql.replace("#1", ((Paciente) entidade).getCpf());
-            sql += sql.replace("#2", entidade.getNome());
-            sql += sql.replace("#3", ((Paciente) entidade).getCep());
-            sql += sql.replace("#4", ((Paciente) entidade).getRua());
-            sql += sql.replace("#5", ((Paciente) entidade).getNumero());
-            sql += sql.replace("#6", ((Paciente) entidade).getBairro());
-            sql += sql.replace("#7", ((Paciente) entidade).getCep());
-            sql += sql.replace("#8", ((Paciente) entidade).getUf());
-            sql += sql.replace("#9", ((Paciente) entidade).getFone());
-            sql += sql.replace("#A", ((Paciente) entidade).getEmail());
-            sql += sql.replace("#B", ((Paciente) entidade).getHisto());
+            sql = sql.replace("#1", ((Paciente) entidade).getCpf());
+            sql = sql.replace("#2", entidade.getNome());
+            sql = sql.replace("#3", ((Paciente) entidade).getCep());
+            sql = sql.replace("#4", ((Paciente) entidade).getRua());
+            sql = sql.replace("#5", ((Paciente) entidade).getNumero());
+            sql = sql.replace("#6", ((Paciente) entidade).getBairro());
+            sql = sql.replace("#7", ((Paciente) entidade).getCep());
+            sql = sql.replace("#8", ((Paciente) entidade).getUf());
+            sql = sql.replace("#9", ((Paciente) entidade).getFone());
+            sql = sql.replace("#A", ((Paciente) entidade).getEmail());
+            sql = sql.replace("#B", ((Paciente) entidade).getHisto());
         }
         return DB.getCon().manipular(sql);
     }
@@ -88,6 +91,11 @@ public class PessoaDAL implements IDAL<Pessoa>{
 
     @Override
     public Pessoa get(int id) {
+        return null;
+    }
+
+    @Override
+    public List<Pessoa> get(String filtro) {
         return null;
     }
 
@@ -141,8 +149,65 @@ public class PessoaDAL implements IDAL<Pessoa>{
         return pessoa;
     }
 
-    @Override
-    public List<Pessoa> get(String filtro) {
-        return null;
+    public List<Pessoa> get(String filtro, Pessoa entidade) {
+        List <Pessoa> pessoas = new ArrayList<>();
+        String sql = "select * from ";
+        try {
+            if(entidade instanceof Dentista){
+                sql += "dentista";
+                if(!filtro.isEmpty()){
+                    sql+=" where "+filtro;
+                }
+                ResultSet rs=DB.getCon().consultar(sql);
+                while (rs.next()){
+                    pessoas.add(new Dentista(
+                            rs.getInt("den_id"),
+                            rs.getString("den_nome"),
+                            rs.getInt("den_cro"),
+                            rs.getString("den_fone"),
+                            rs.getString("den_email")
+                    ));
+                }
+
+            } else if (entidade instanceof Usuario){
+                sql += "usuario";
+                if(!filtro.isEmpty()){
+                    sql += " where "+ filtro;
+                }
+                ResultSet rs=DB.getCon().consultar(sql);
+                while (rs.next()){
+                    pessoas.add(new Usuario(
+                            rs.getInt("uso_id"),
+                            rs.getString("uso_nome"),
+                            rs.getInt("uso_nivel"),
+                            rs.getString("uso_senha")
+                    ));
+                }
+            } else {
+                sql += "paciente";
+                if(!filtro.isEmpty()){
+                    sql += " where "+ filtro;
+                }
+                ResultSet rs=DB.getCon().consultar(sql);
+                while (rs.next())
+                    pessoas.add(new Paciente(
+                            rs.getInt("pac_id"),
+                            rs.getString("pac_nome"),
+                            rs.getString("pac_cpf"),
+                            rs.getString("pac_cep"),
+                            rs.getString("pac_rua"),
+                            rs.getString("pac_numero"),
+                            rs.getString("pac_bairro"),
+                            rs.getString("pac_cidade"),
+                            rs.getString("pac_uf"),
+                            rs.getString("pac_fone"),
+                            rs.getString("pac_email"),
+                            rs.getString("pac_histo")
+                    ));
+            }
+        }catch (Exception e){
+
+        }
+        return pessoas;
     }
 }

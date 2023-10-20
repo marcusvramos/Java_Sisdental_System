@@ -6,7 +6,7 @@ public class DB
     static public boolean conectar()
     {
         return con.conectar("jdbc:postgresql://localhost:5432/", 
-                "sisdentaldb", "postgres", "postgres");
+                "sisdentaldb", "postgres", "060770pa");
         
     }
     static public Conexao getCon()

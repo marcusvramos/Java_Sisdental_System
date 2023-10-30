@@ -2,7 +2,6 @@ package br.fipp.sisdentalfx;
 
 import br.fipp.sisdentalfx.db.dals.MaterialDAL;
 import br.fipp.sisdentalfx.db.dals.PessoaDAL;
-import br.fipp.sisdentalfx.db.dals.ProcedimentoDAL;
 import br.fipp.sisdentalfx.db.entidades.*;
 import br.fipp.sisdentalfx.db.util.DB;
 
@@ -10,43 +9,25 @@ import java.util.List;
 
 public class Testes {
     public static void main(String[] args) {
+        /* conexão com o banco*/
         if(DB.conectar()) {
 //            MaterialDAL dal = new MaterialDAL();
-//            dal.gravar(new Material("agulhas",2.20));
+//            dal.gravar(new Material("mascara",5.50));
 //            List<Material> lista = dal.get("");
 //            for (Material material : lista)
 //                System.out.println(material);
-
-            //PessoaDAL dal=new PessoaDAL();
-//            if(!dal.gravar(new Dentista("Teodoro",123,"18996807124","joelton@email.com"))) {
-//                DB.getCon().getMensagemErro();
-//            }
-//            if(!dal.gravar(new Paciente("Gustavo Lima",
-//                    "40380352800",
-//                    "19023290",
-//                    "Rua Paulistas",
-//                    "1234",
-//                    "Vila Geni",
-//                    "Presidente Prudente",
-//                    "SP",
-//                    "18996807124",
-//                    "marcusramos651@gmail.com",
-//                    "")
-//            )) {
-//                DB.getCon().getMensagemErro();
-//            }
-//            List<Pessoa> lista = dal.get("", new Paciente());
-//            //System.out.println(dal.get(1, new Paciente()).getNome());
-//            for(Pessoa p : lista){
-//                System.out.println(((Paciente)p).getCpf());
-//            }
-            ProcedimentoDAL dal = new ProcedimentoDAL();
-            if(!dal.gravar(new Procedimento("Clareamento Dental", 50, 250))){
+           PessoaDAL dal=new PessoaDAL();
+           //if(!dal.gravar(new Dentista("Teodoro",321,"18333999","teo@email.com")))
+           //    DB.getCon().getMensagemErro();
+           //if(!dal.gravar(new Paciente("Gustavo Lima","123254","","","","","","","","","")))
+           //    DB.getCon().getMensagemErro();]
+            if(!dal.gravar(new Usuario("Syrley",1,"123")))
                 DB.getCon().getMensagemErro();
-            }
-            List<Procedimento> lista = dal.get("");
-            for(Procedimento p : lista)
-                System.out.println(p.getDescricao());
+
+            // System.out.println(dal.get(2,new Paciente()).getNome());
+            List<Pessoa> lista = dal.get("",new Usuario());
+            for (Pessoa p : lista)
+                System.out.println(p.getNome());
 
         }
         else

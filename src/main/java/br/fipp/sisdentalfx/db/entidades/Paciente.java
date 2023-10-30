@@ -1,6 +1,6 @@
 package br.fipp.sisdentalfx.db.entidades;
 
-public class Paciente extends Pessoa {
+public class Paciente extends Pessoa{
     private String cpf, cep, rua, numero, bairro, cidade, uf, fone, email, histo;
 
     public Paciente(int id, String nome, String cpf, String cep, String rua, String numero, String bairro, String cidade, String uf, String fone, String email, String histo) {
@@ -17,12 +17,12 @@ public class Paciente extends Pessoa {
         this.histo = histo;
     }
 
-    public Paciente(){
-        this(0, "", "", "", "", "", "", "", "", "", "", "");
+    public Paciente() {
+        this(0,"","","","","","","","","","","");
     }
 
     public Paciente(String nome, String cpf, String cep, String rua, String numero, String bairro, String cidade, String uf, String fone, String email, String histo) {
-        this(0, nome, cpf, cep, rua, numero, bairro, cidade, uf, fone, email, histo);
+        this(0,nome,cpf,cep,rua,numero,bairro,cidade,uf,fone,email,histo);
     }
 
     public String getCpf() {

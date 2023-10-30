@@ -2,7 +2,6 @@ package br.fipp.sisdentalfx.db.entidades;
 
 abstract public class Pessoa {
     private int id;
-
     private String nome;
 
     public Pessoa(int id, String nome) {
@@ -10,13 +9,9 @@ abstract public class Pessoa {
         this.nome = nome;
     }
 
-    public Pessoa() {
-        this(0, "");
-    }
+    public Pessoa() { this(0,""); }
 
-    public Pessoa(String nome) {
-        this(0, nome);
-    }
+    public Pessoa(String nome) { this(0,nome); }
 
     public int getId() {
         return id;

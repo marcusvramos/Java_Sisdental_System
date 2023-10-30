@@ -2,7 +2,6 @@ package br.fipp.sisdentalfx.db.entidades;
 
 public class Dentista extends Pessoa {
     private int cro;
-
     private String fone, email;
 
     public Dentista(int id, String nome, int cro, String fone, String email) {
@@ -13,11 +12,11 @@ public class Dentista extends Pessoa {
     }
 
     public Dentista() {
-        this(0, "", 0, "", "");
+        this(0,"",0,"","");
     }
 
     public Dentista(String nome, int cro, String fone, String email) {
-        this(0, nome, cro, fone, email);
+        this(0,nome,cro,fone,email);
     }
 
     public int getCro() {

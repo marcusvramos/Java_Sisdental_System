@@ -1,6 +1,6 @@
 package br.fipp.sisdentalfx.db.util;
 
-public class DB
+public class DB  // classe Singleton
 {
     static private Conexao con=new Conexao();
     static public boolean conectar()

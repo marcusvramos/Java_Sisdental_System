@@ -1,8 +1,7 @@
 package br.fipp.sisdentalfx.db.entidades;
 
-public class Usuario extends Pessoa {
+public class Usuario extends Pessoa{
     private int nivel;
-
     private String senha;
 
     public Usuario(int id, String nome, int nivel, String senha) {
@@ -12,11 +11,11 @@ public class Usuario extends Pessoa {
     }
 
     public Usuario() {
-        this(0, "", 0, "");
+        this(0,"",0,"");
     }
 
     public Usuario(String nome, int nivel, String senha) {
-        this(0, nome, nivel, senha);
+        this(0,nome,nivel,senha);
     }
 
     public int getNivel() {

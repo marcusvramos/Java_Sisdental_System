@@ -17,7 +17,8 @@ public class Conexao
     public boolean conectar(String local,String banco,String usuario,String senha)
     {   boolean conectado=false;
         try {
-            String url = local+banco;
+            //Class.forName(driver); "org.postgresql.Driver");
+            String url = local+banco; //"jdbc:postgresql://localhost/"+banco;
             connect = DriverManager.getConnection( url, usuario,senha);
             conectado=true;
         }
@@ -51,7 +52,10 @@ public class Conexao
     {   ResultSet rs=null;
         try {
            Statement statement = connect.createStatement();
+             //ResultSet.TYPE_SCROLL_INSENSITIVE,
+             //ResultSet.CONCUR_READ_ONLY);
            rs = statement.executeQuery( sql );
+           //statement.close();
         }
         catch ( SQLException sqlex )
         { erro="Erro: "+sqlex.toString();

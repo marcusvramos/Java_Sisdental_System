@@ -53,7 +53,7 @@ public class ProcedimentoDAL implements IDAL<Procedimento> {
         ResultSet rs=DB.getCon().consultar(sql);
         try {
             while (rs.next())
-                procedimentos.add(new Procedimento(rs.getString("pro_desc"), rs.getInt("pro_tempo"), rs.getDouble("pro_valor")));
+                procedimentos.add(new Procedimento(rs.getInt("pro_id"), rs.getString("pro_desc"), rs.getInt("pro_tempo"), rs.getDouble("pro_valor")));
         }
         catch (Exception e){  }
         return procedimentos;

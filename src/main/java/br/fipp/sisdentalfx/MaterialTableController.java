@@ -1,11 +1,9 @@
 package br.fipp.sisdentalfx;
 
-import br.fipp.sisdentalfx.db.dals.PessoaDAL;
-import br.fipp.sisdentalfx.db.dals.ProcedimentoDAL;
-import br.fipp.sisdentalfx.db.entidades.Procedimento;
+import br.fipp.sisdentalfx.db.dals.MaterialDAL;
+import br.fipp.sisdentalfx.db.entidades.Material;
 import br.fipp.sisdentalfx.util.UIControl;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -15,12 +13,11 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ProcedimentoTableController implements Initializable {
-    public TableView <Procedimento> tabela;
-    public TableColumn <Procedimento, String> colID;
-    public TableColumn <Procedimento, String> colDescricao;
-    public TableColumn <Procedimento, Integer> colTempo;
-    public TableColumn <Procedimento, Double> colValor;
+public class MaterialTableController implements Initializable {
+    public TableView <Material> tabela;
+    public TableColumn <Material, Integer> colID;
+    public TableColumn <Material, String> colDescricao;
+    public TableColumn <Material, Double> colValor;
     public Button btClose;
     public Button btNovo;
     public TextField tfPesquisa;
@@ -32,21 +29,20 @@ public class ProcedimentoTableController implements Initializable {
     }
 
     private void preencherTabela(String s) {
-        List<Procedimento> procedimentos = new ProcedimentoDAL().get(s);
+        List<Material> materiais = new MaterialDAL().get(s);
         colID.setCellValueFactory(new PropertyValueFactory<>("id"));
         colDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
-        colTempo.setCellValueFactory(new PropertyValueFactory<>("tempo"));
-        colValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
-        this.tabela.setItems(FXCollections.observableArrayList(procedimentos));
+        colValor.setCellValueFactory(new PropertyValueFactory<>("preco"));
+        this.tabela.setItems(FXCollections.observableArrayList(materiais));
     }
-    public void onNovoProcedimento(javafx.event.ActionEvent actionEvent) {
-        UIControl.abreModal("procedimento-view.fxml");
+    public void onNovoMaterial(javafx.event.ActionEvent actionEvent) {
+        UIControl.abreModal("material-view.fxml");
         preencherTabela("");
     }
 
     public void onFiltrar(KeyEvent keyEvent) {
         String filtro = tfPesquisa.getText().toUpperCase();
-        preencherTabela("upper(pro_desc) like '%"+filtro+"%'");
+        preencherTabela("upper(mat_desc) like '%"+filtro+"%'");
     }
 
     public void onAlterar(javafx.event.ActionEvent actionEvent) {
@@ -54,11 +50,12 @@ public class ProcedimentoTableController implements Initializable {
 
     public void onApagar(javafx.event.ActionEvent actionEvent) {
         if(tabela.getSelectionModel().getSelectedItem()!=null){
-            Procedimento procedimento = (Procedimento) tabela.getSelectionModel().getSelectedItem();
+            Material material = tabela.getSelectionModel().getSelectedItem();
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setContentText("Posso apagar definitivamente o procedimento " + procedimento.getDescricao());
+            System.out.println(material.getId());
+            alert.setContentText("Posso apagar definitivamente o material " + material.getDescricao());
             if(alert.showAndWait().get() == ButtonType.OK){
-                new ProcedimentoDAL().apagar(procedimento);
+                new MaterialDAL().apagar(material);
                 preencherTabela("");
             }
         }

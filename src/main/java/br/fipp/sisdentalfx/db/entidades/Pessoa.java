@@ -7,6 +7,7 @@ abstract public class Pessoa {
     public Pessoa(int id, String nome) {
         this.id = id;
         this.nome = nome;
+
     }
 
     public Pessoa() { this(0,""); }

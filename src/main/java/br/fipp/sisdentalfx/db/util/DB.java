@@ -6,7 +6,7 @@ public class DB  // classe Singleton
     static public boolean conectar()
     {
         return con.conectar("jdbc:postgresql://localhost:5432/", 
-                "sisdentaldb", "postgres", "postgres");
+                "postgres", "postgres", "060770pa");
         
     }
     static public Conexao getCon()

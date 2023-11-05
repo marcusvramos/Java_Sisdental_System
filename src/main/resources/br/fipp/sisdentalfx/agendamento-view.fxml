@@ -20,10 +20,10 @@
         <menus>
           <Menu mnemonicParsing="false" style="-fx-color: white;" text="▒">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#onPaciente" text="PACIENTE" />
-                  <MenuItem mnemonicParsing="false" onAction="#onMedico" text="MÉDICO" />
-                  <MenuItem mnemonicParsing="false" onAction="#onMaterial" text="MATERIAL" />
-                  <MenuItem mnemonicParsing="false" onAction="#onProcedimento" text="PROCEDIMENTO" />
+                <MenuItem mnemonicParsing="false" onAction="#onPaciente" text="PACIENTE" />
+                    <MenuItem mnemonicParsing="false" onAction="#onMedico" text="MÉDICO" />
+                    <MenuItem mnemonicParsing="false" onAction="#onMaterial" text="MATERIAL" />
+                    <MenuItem mnemonicParsing="false" onAction="#onProcedimento" text="PROCEDIMENTO" />
             </items>
           </Menu>
         </menus>
@@ -42,7 +42,7 @@
                         <Insets top="40.0" />
                      </VBox.margin>
                   </Label>
-                  <ComboBox prefHeight="25.0" prefWidth="132.0" style="-fx-font-size: 14;" />
+                  <ComboBox prefHeight="25.0" prefWidth="132.0" style="-fx-font-size: 14;" fx:id="comboBoxDentista" onAction="#exibirDentistaComboBox"/>
                </children>
                <HBox.margin>
                   <Insets bottom="12.0" left="12.0" top="12.0" />

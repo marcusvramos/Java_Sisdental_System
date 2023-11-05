@@ -132,7 +132,8 @@ public class PacienteViewController implements Initializable {
                 tfUf.getText(),
                 tfTelefone.getText(),
                 tfEmail.getText(),
-                tfHistorico.getText());
+                tfHistorico.getText()
+        );
 
         if(!new PessoaDAL().gravar(paciente)){
             Alert alert = new Alert(Alert.AlertType.ERROR);

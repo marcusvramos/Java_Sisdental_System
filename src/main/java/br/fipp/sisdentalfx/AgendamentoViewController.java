@@ -1,8 +1,9 @@
 package br.fipp.sisdentalfx;
 
+import br.fipp.sisdentalfx.db.dals.ConsultaDAL;
 import br.fipp.sisdentalfx.db.dals.PessoaDAL;
-import br.fipp.sisdentalfx.db.entidades.Dentista;
-import br.fipp.sisdentalfx.db.entidades.Pessoa;
+import br.fipp.sisdentalfx.db.entidades.*;
+import br.fipp.sisdentalfx.util.PesquisaPaciente;
 import br.fipp.sisdentalfx.util.UIControl;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,9 +11,16 @@ import javafx.css.Style;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.BoxBlur;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -23,12 +31,18 @@ import java.util.ResourceBundle;
 
 public class AgendamentoViewController implements Initializable {
     public DatePicker dpDiaConsulta;
-    public ComboBox <String> comboBoxDentista;
+    public ComboBox <Dentista>cbDentista;
+    public TableView<Horario> tableView;
+    public TableColumn<Horario,Integer> colHora;
+    public TableColumn <Horario, Paciente> colPaciente;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         dpDiaConsulta.setValue(LocalDate.now());
-        exibirDentistaComboBox(null);
+        List <Pessoa>dentistas=new PessoaDAL().get("",new Dentista());
+        for(Pessoa dentista:dentistas) {
+            cbDentista.getItems().add((Dentista)dentista);
+        }
     }
 
     public void onPaciente(ActionEvent actionEvent) throws IOException {
@@ -59,11 +73,55 @@ public class AgendamentoViewController implements Initializable {
         UIControl.abreModal("procedimento-table-view.fxml");
         dpDiaConsulta.getScene().getRoot().setEffect(null);
     }
+    public void onTrocouDentista(ActionEvent actionEvent) {
+        preencherHorarios();
+    }
 
-    public void exibirDentistaComboBox(ActionEvent actionEvent){
-        List<String> nomeDentistas = new PessoaDAL().getAllNome();
-        ObservableList<String> observableNomesDosDentistas = FXCollections.observableArrayList(nomeDentistas);
-        comboBoxDentista.setItems(observableNomesDosDentistas);
+    public void onAgendar(ActionEvent actionEvent) {
+        // abrir janela selecionar um paciente
+        PesquisaPaciente pesquisa = new PesquisaPaciente();
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(new Scene(pesquisa));
+        stage.setWidth(400);
+        stage.setHeight(600);
+        stage.showAndWait();
+
+        Paciente paciente = pesquisa.getPaciente();
+        if(paciente != null) {
+            int hora = tableView.getSelectionModel().getSelectedItem().getHora();
+            new ConsultaDAL().gravar(new Consulta(dpDiaConsulta.getValue(), hora, cbDentista.getValue(), paciente, ""));
+            preencherHorarios();
+        }
+
+    }
+
+    public void onCancelarAgendamento(ActionEvent actionEvent) {
+    }
+
+    public void onTrocouData(ActionEvent actionEvent) {
+        preencherHorarios();
+    }
+
+        private void preencherHorarios()
+    {
+        colHora.setCellValueFactory(new PropertyValueFactory<>("hora"));
+        colPaciente.setCellValueFactory(new PropertyValueFactory<>("paciente"));
+        List<Consulta> cmarcadas=new ConsultaDAL().get(cbDentista.getSelectionModel().getSelectedItem(),dpDiaConsulta.getValue());
+        List<Horario> horarios=new ArrayList();
+
+        // gerar tabela de horários vazio
+        for(int hora=8; hora<18; hora++)
+        {
+            horarios.add(new Horario(hora, new Paciente()));
+        }
+
+        // preencher os horários já agendados a partir das 8h
+        for(Consulta c : cmarcadas) {
+            horarios.set(c.getHorario() - 8, new Horario(c.getHorario(), c.getPaciente()));
+        }
+
+        tableView.setItems(FXCollections.observableArrayList(horarios));
     }
 
 

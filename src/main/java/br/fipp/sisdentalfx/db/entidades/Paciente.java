@@ -104,4 +104,9 @@ public class Paciente extends Pessoa{
     public void setHisto(String histo) {
         this.histo = histo;
     }
+
+    @Override
+    public String toString() {
+        return getNome();
+    }
 }

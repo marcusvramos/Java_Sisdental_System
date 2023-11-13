@@ -27,7 +27,34 @@ public class ConsultaDAL implements IDAL<Consulta>{
 
     @Override
     public boolean alterar(Consulta entidade) {
-        return false;
+        String sql="UPDATE consulta SET con_relato='#1', con_efetivado=true WHERE con_id="+entidade.getId();
+        sql=sql.replace("#1",entidade.getRelato());
+
+        if(DB.getCon().manipular(sql)){
+            for(Consulta.ItemMat item : entidade.getMateriais()) {
+                DB.getCon().manipular(
+                        String.format(
+                                "insert into cons_mat (mat_id, con_id, cm_quant) values (%d,%d,%d)",
+                                item.material().getId(),
+                                entidade.getId(),
+                                item.quant()
+                        )
+                );
+            }
+            for(Consulta.ItemProc item : entidade.getProcedimentos()) {
+                DB.getCon().manipular(
+                        String.format(
+                                "insert into cons_proc (pro_id, con_id, cp_quant) values (%d,%d,%d)",
+                                item.procedimento().getId(),
+                                entidade.getId(),
+                                item.quant()
+                        )
+                );
+            }
+
+        }
+
+        return true;
     }
 
     @Override
@@ -60,8 +87,32 @@ public class ConsultaDAL implements IDAL<Consulta>{
         try {
             while (rs.next()) {
                 Paciente paciente=(Paciente) new PessoaDAL().get(rs.getInt("pac_id"),new Paciente());
-                consultas.add(new Consulta(rs.getInt("con_id"), rs.getDate("con_data").toLocalDate(), rs.getInt("con_horario"),
-                      dentista,paciente,rs.getString("con_relato"),rs.getBoolean("con_efetivado")));
+                Consulta consulta = new Consulta(rs.getInt("con_id"), rs.getDate("con_data").toLocalDate(), rs.getInt("con_horario"),
+                        dentista,paciente,rs.getString("con_relato"),rs.getBoolean("con_efetivado"));
+
+                // anexar os materiais
+                String sql2 = "select * from cons_mat where con_id ="+consulta.getId();
+                ResultSet rs2 = DB.getCon().consultar(sql2);
+                while(rs2.next()){
+                    Consulta.ItemMat item = new Consulta.ItemMat(
+                            rs2.getInt("cm_quant"),
+                            new MaterialDAL().get(rs2.getInt("mat_id"))
+                    );
+                    consulta.addMaterial(item);
+                }
+
+                // anexar os procedimentos
+                String sql3 = "select * from cons_proc where con_id ="+consulta.getId();
+                ResultSet rs3 = DB.getCon().consultar(sql3);
+                while(rs3.next()){
+                    Consulta.ItemProc item = new Consulta.ItemProc(
+                            rs3.getInt("cp_quant"),
+                            new ProcedimentoDAL().get(rs3.getInt("pro_id"))
+                    );
+                    consulta.addProcedimento(item);
+                }
+
+                consultas.add(consulta);
             }
         }catch (Exception e){
             System.out.println(e.getMessage());

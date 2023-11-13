@@ -1,8 +1,14 @@
 package br.fipp.sisdentalfx.db.entidades;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Consulta {
+
+    public record ItemMat(int quant, Material material){};
+
+    public record ItemProc(int quant, Procedimento procedimento){};
     private int id;
     private LocalDate data;
     private int horario;
@@ -10,6 +16,10 @@ public class Consulta {
     private Paciente paciente;
     private String relato;
     private boolean efetivada;
+
+    List <ItemProc> procedimentos;
+
+    List <ItemMat> materiais;
 
     public Consulta(int id, LocalDate data, int horario, Dentista dentista, Paciente paciente, String relato, boolean efetivada) {
         this.id = id;
@@ -19,6 +29,8 @@ public class Consulta {
         this.paciente = paciente;
         this.relato = relato;
         this.efetivada = efetivada;
+        this.procedimentos = new ArrayList<>();
+        this.materiais = new ArrayList<>();
     }
 
     public Consulta(LocalDate data, int horario, Dentista dentista, Paciente paciente, String relato) {
@@ -84,4 +96,29 @@ public class Consulta {
     public void setEfetivada(boolean efetivada) {
         this.efetivada = efetivada;
     }
+
+    public void addMaterial(ItemMat item) {
+        materiais.add(item);
+    }
+
+    public void addMaterial(int quant, Material material) {
+        materiais.add(new ItemMat(quant, material));
+    }
+
+    public void addProcedimento(ItemProc item) {
+        procedimentos.add(item);
+    }
+
+    public void addProcedimento(int quant, Procedimento procedimento) {
+        procedimentos.add(new ItemProc(quant, procedimento));
+    }
+
+    public List<ItemProc> getProcedimentos() {
+        return procedimentos;
+    }
+
+    public List<ItemMat> getMateriais() {
+        return materiais;
+    }
+
 }

@@ -53,7 +53,7 @@ public class MainViewController implements Initializable {
     }
 
     public void onDentista(MouseEvent mouseEvent) {
-
+        UIControl.trocaPainel("acompanhamento-view.fxml");
     }
 
     public void onConfig(MouseEvent mouseEvent) {

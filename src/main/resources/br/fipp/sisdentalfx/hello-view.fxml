@@ -10,12 +10,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="painel" prefHeight="600.0" prefWidth="1000.0" stylesheets="@estilos.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.fipp.sisdentalfx.HelloController">
+<BorderPane fx:id="painel" prefHeight="600.0" prefWidth="1000.0" stylesheets="@estilos.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.fipp.sisdentalfx.HelloController">
    <top>
       <HBox alignment="CENTER_RIGHT" prefHeight="49.0" prefWidth="1000.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="btHome" mnemonicParsing="false" onAction="#onHome" prefHeight="32.0" prefWidth="32.0" style="-fx-background-image: url('home.png'); -fx-background-position: center center; -fx-background-color: transparent;" />
             <Button fx:id="btClose" mnemonicParsing="false" onAction="#onClose" prefHeight="32.0" prefWidth="32.0" style="-fx-background-image: url('close.png'); -fx-background-position: center center; -fx-background-color: transparent;" />
+            <Button fx:id="btHelp" layoutX="906.0" layoutY="19.0" mnemonicParsing="false" onAction="#onHelp" prefHeight="32.0" prefWidth="32.0" text="?" />
          </children>
          <padding>
             <Insets left="20.0" right="20.0" />

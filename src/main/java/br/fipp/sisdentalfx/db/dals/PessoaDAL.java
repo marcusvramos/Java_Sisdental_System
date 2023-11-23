@@ -4,7 +4,6 @@ import br.fipp.sisdentalfx.db.entidades.*;
 import br.fipp.sisdentalfx.db.util.DB;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -129,6 +128,7 @@ public class PessoaDAL implements IDAL<Pessoa>{
             }
         }
         catch (Exception e){  };
+        System.out.println(sql);
         return pessoa;
     }
 
@@ -165,21 +165,7 @@ public class PessoaDAL implements IDAL<Pessoa>{
             }
         }
         catch (Exception e){  };
+        System.out.println(sql);
         return pessoas;
-    }
-
-    public List<String> getAllNome(){
-        List<String> nomes = new ArrayList<>();
-        try{
-            String sql = "SELECT den_nome FROM dentista";
-            ResultSet rs = DB.getCon().consultar(sql);
-
-            while (rs.next()) {
-                String nome = rs.getString("den_nome");
-                nomes.add(nome);
-            }
-        }
-        catch (Exception e){ }
-        return nomes;
     }
 }

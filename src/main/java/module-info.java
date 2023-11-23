@@ -6,6 +6,7 @@ module br.fipp.sisdentalfx {
     requires java.logging;
     requires org.json;
     requires jasperreports;
+    requires javafx.web;
 
     opens br.fipp.sisdentalfx to javafx.fxml;
     opens br.fipp.sisdentalfx.db.entidades to javafx.fxml;

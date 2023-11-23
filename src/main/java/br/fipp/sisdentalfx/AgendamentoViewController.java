@@ -97,6 +97,12 @@ public class AgendamentoViewController implements Initializable {
     }
 
     public void onCancelarAgendamento(ActionEvent actionEvent) {
+        Paciente paciente = tableView.getSelectionModel().getSelectedItem().getPaciente();
+        if(paciente != null) {
+            int hora = tableView.getSelectionModel().getSelectedItem().getHora();
+            new ConsultaDAL().apagar(new Consulta(dpDiaConsulta.getValue(), hora, cbDentista.getValue(), paciente, ""));
+            preencherHorarios();
+        }
     }
 
     public void onTrocouData(ActionEvent actionEvent) {

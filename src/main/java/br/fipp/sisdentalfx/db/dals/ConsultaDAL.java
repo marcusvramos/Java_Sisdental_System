@@ -5,6 +5,7 @@ import br.fipp.sisdentalfx.db.entidades.Dentista;
 import br.fipp.sisdentalfx.db.entidades.Material;
 import br.fipp.sisdentalfx.db.entidades.Paciente;
 import br.fipp.sisdentalfx.db.util.DB;
+import javafx.scene.control.Alert;
 
 import java.sql.ResultSet;
 import java.time.LocalDate;
@@ -59,7 +60,18 @@ public class ConsultaDAL implements IDAL<Consulta>{
 
     @Override
     public boolean apagar(Consulta entidade) {
-        return false;
+        try{
+            entidade.getId();
+            String sql="delete from consulta WHERE con_data='"+entidade.getData()+"' and con_horario='"+entidade.getHorario()+
+            "' and den_id="+entidade.getDentista().getId()+" and pac_id="+entidade.getPaciente().getId();
+            return DB.getCon().manipular(sql);
+        }
+        catch (Exception e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Erro ao apagar consulta "+ DB.getCon().getMensagemErro());
+            alert.showAndWait();
+            return false;
+        }
     }
 
     @Override

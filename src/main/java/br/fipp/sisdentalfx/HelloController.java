@@ -55,11 +55,11 @@ public class HelloController implements Initializable {
 
     public void onHome(ActionEvent actionEvent) throws IOException {
         String usuariologin="adm", senha="123";
-        List<Pessoa> usuarios= new PessoaDAL().get("uso_nome like '"+usuariologin+"'", new Usuario());
+        List<Pessoa> usuarios= new PessoaDAL().get("uso_nome like '%"+usuariologin+"%'", new Usuario());
 
         Usuario usuario;
         boolean logado=false;
-        if(usuarios.size()>0)
+        if(usuarios.size() > 0)
         {
             usuario=(Usuario) usuarios.get(0);
             if (usuario.getSenha().equals(senha)) {

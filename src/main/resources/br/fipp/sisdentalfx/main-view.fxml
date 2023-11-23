@@ -6,11 +6,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.TilePane?>
 
-<HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="36.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.fipp.sisdentalfx.MainViewController">
+<HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="36.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.fipp.sisdentalfx.MainViewController">
    <children>
       <TilePane alignment="CENTER" maxHeight="190.0" prefHeight="200.0" prefWidth="200.0">
          <children>
-            <ImageView fitHeight="190.0" fitWidth="200.0" onMouseClicked="#onAdm" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="opADM" disable="true" fitHeight="190.0" fitWidth="200.0" onMouseClicked="#onAdm" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" opacity="0.25" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@adm.png" />
                </image>
@@ -22,7 +22,7 @@
       </TilePane>
       <TilePane alignment="CENTER" layoutX="310.0" layoutY="215.0" maxHeight="190.0" prefHeight="200.0" prefWidth="200.0">
          <children>
-            <ImageView fitHeight="190.0" fitWidth="200.0" onMouseClicked="#onSecretaria" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="opSecretaria" disable="true" fitHeight="190.0" fitWidth="200.0" onMouseClicked="#onSecretaria" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" opacity="0.25" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@secretaria.png" />
                </image>
@@ -34,7 +34,7 @@
       </TilePane>
       <TilePane alignment="CENTER" layoutX="410.0" layoutY="215.0" maxHeight="190.0" prefHeight="200.0" prefWidth="200.0">
          <children>
-            <ImageView fitHeight="190.0" fitWidth="200.0" onMouseClicked="#onDentista" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="OpDentista" disable="true" fitHeight="190.0" fitWidth="200.0" onMouseClicked="#onDentista" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" opacity="0.25" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@dentista.png" />
                </image>
@@ -46,7 +46,7 @@
       </TilePane>
       <TilePane alignment="CENTER" layoutX="510.0" layoutY="215.0" maxHeight="190.0" prefHeight="200.0" prefWidth="200.0">
          <children>
-            <ImageView fitHeight="190.0" fitWidth="200.0" onMouseClicked="#onConfig" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="opConfig" disable="true" fitHeight="190.0" fitWidth="200.0" onMouseClicked="#onConfig" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" opacity="0.25" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@config.png" />
                </image>

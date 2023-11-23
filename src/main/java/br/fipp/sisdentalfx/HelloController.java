@@ -26,6 +26,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class HelloController implements Initializable {
@@ -53,30 +54,61 @@ public class HelloController implements Initializable {
 
     }
 
-    public void onHome(ActionEvent actionEvent) throws IOException {
-        String usuariologin="adm", senha="123";
+    public boolean logar(String usuariologin, String senha){
         List<Pessoa> usuarios= new PessoaDAL().get("uso_nome like '%"+usuariologin+"%'", new Usuario());
 
         Usuario usuario;
-        boolean logado=false;
+        boolean logado = false;
         if(usuarios.size() > 0)
         {
             usuario=(Usuario) usuarios.get(0);
             if (usuario.getSenha().equals(senha)) {
+                System.out.println("senha bateu");
                 UIControl.usuario=usuario.getNome();
                 UIControl.nivel=usuario.getNivel();
+                // 1 ADM
+                // 2 Secretária
+                // 3 dentista
                 logado = true;
+                return logado;
             }
         }
-        if (logado) {
-            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("main-view.fxml"));
-            fxmlLoader.load();
-            staticpainel.setCenter(fxmlLoader.getRoot());
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Usuário ou senha inválidos");
-            alert.showAndWait();
+
+        return false;
+
+    }
+
+
+    public void onHome(ActionEvent actionEvent) throws IOException {
+        TextInputDialog usernameDialog = new TextInputDialog();
+        usernameDialog.setTitle("Login");
+        usernameDialog.setHeaderText(null);
+        usernameDialog.setContentText("Digite o nome de usuário:");
+
+        Optional<String> usernameResult = usernameDialog.showAndWait();
+        if (usernameResult.isPresent()) {
+            String username = usernameResult.get();
+            TextInputDialog passwordDialog = new TextInputDialog();
+            passwordDialog.setTitle("Login");
+            passwordDialog.setHeaderText(null);
+            passwordDialog.setContentText("Digite a senha:");
+
+            Optional<String> passwordResult = passwordDialog.showAndWait();
+            if (passwordResult.isPresent()) {
+                boolean logado = logar(usernameResult.get(), passwordResult.get());
+                if (logado) {
+                    System.out.println("Usuário logado");
+                    FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("main-view.fxml"));
+                    fxmlLoader.load();
+                    staticpainel.setCenter(fxmlLoader.getRoot());
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("Usuário ou senha inválidos");
+                    alert.showAndWait();
+                }
+            }
         }
+
     }
     public void onClose(ActionEvent actionEvent) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

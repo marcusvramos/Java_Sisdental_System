@@ -20,6 +20,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.awt.*;
 import java.io.File;
@@ -35,6 +36,9 @@ public class HelloController implements Initializable {
     public Button btHome;
     public Button btClose;
     public Label lbAcesso;
+    public Button btLogout;
+
+    private boolean telaInicial = true;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -42,6 +46,7 @@ public class HelloController implements Initializable {
         btHome.setTooltip(new Tooltip("Ir para o início"));
         btClose.setTooltip(new Tooltip("Fechar o sistema"));
         btHome.setDisable(true);
+        btLogout.setDisable(true);
 
         lbAcesso.setOnMouseClicked(e->{
             try {
@@ -54,7 +59,8 @@ public class HelloController implements Initializable {
 
     }
 
-    public boolean logar(String usuariologin, String senha){
+    public boolean logar(String usuariologin, String senha) {
+
         List<Pessoa> usuarios= new PessoaDAL().get("uso_nome like '%"+usuariologin+"%'", new Usuario());
 
         Usuario usuario;
@@ -70,6 +76,7 @@ public class HelloController implements Initializable {
                 // 2 Secretária
                 // 3 dentista
                 logado = true;
+                btLogout.setDisable(false);
                 return logado;
             }
         }
@@ -78,8 +85,21 @@ public class HelloController implements Initializable {
 
     }
 
+    private void carregarTelaInicial() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("main-view.fxml"));
+        Parent root = fxmlLoader.load();
+        staticpainel.setCenter(root);
+        telaInicial = true; // Define o indicador de tela inicial como verdadeiro ao retornar para a tela inicial
+    }
+
+
 
     public void onHome(ActionEvent actionEvent) throws IOException {
+        if (!telaInicial) {
+            // Se não estiver na tela inicial, retorne para a tela inicial
+            carregarTelaInicial();
+            return;
+        }
         TextInputDialog usernameDialog = new TextInputDialog();
         usernameDialog.setTitle("Login");
         usernameDialog.setHeaderText(null);
@@ -101,6 +121,7 @@ public class HelloController implements Initializable {
                     FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("main-view.fxml"));
                     fxmlLoader.load();
                     staticpainel.setCenter(fxmlLoader.getRoot());
+                    telaInicial = false;
                 } else {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setContentText("Usuário ou senha inválidos");
@@ -120,5 +141,21 @@ public class HelloController implements Initializable {
     public void onHelp(ActionEvent actionEvent) {
         File file = new File("help/exemplo.html");
         UIControl.abreHelp(file.toURI().toString());
+    }
+
+    public void onLogout(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText("Deseja realmente sair?");
+        if(alert.showAndWait().get() == ButtonType.OK) {
+            UIControl.usuario = null;
+            UIControl.nivel = 0;
+            btLogout.setDisable(true);
+            try {
+                telaInicial = true;
+                onHome(null);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }

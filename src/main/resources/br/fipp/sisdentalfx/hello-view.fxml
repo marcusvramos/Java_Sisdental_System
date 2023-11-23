@@ -10,13 +10,16 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <BorderPane fx:id="painel" prefHeight="600.0" prefWidth="1000.0" stylesheets="@estilos.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.fipp.sisdentalfx.HelloController">
    <top>
       <HBox alignment="CENTER_RIGHT" prefHeight="49.0" prefWidth="1000.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="btHome" mnemonicParsing="false" onAction="#onHome" prefHeight="32.0" prefWidth="32.0" style="-fx-background-image: url('home.png'); -fx-background-position: center center; -fx-background-color: transparent;" />
             <Button fx:id="btClose" mnemonicParsing="false" onAction="#onClose" prefHeight="32.0" prefWidth="32.0" style="-fx-background-image: url('close.png'); -fx-background-position: center center; -fx-background-color: transparent;" />
-            <Button fx:id="btHelp" layoutX="906.0" layoutY="19.0" mnemonicParsing="false" onAction="#onHelp" prefHeight="32.0" prefWidth="32.0" text="?" />
+            <Button fx:id="btHelp" mnemonicParsing="false" onAction="#onHelp" prefHeight="32.0" prefWidth="32.0" style="-fx-background-image: url('help.png'); -fx-background-position: center center; -fx-background-color: transparent;" />
+            <Button fx:id="btLogout" mnemonicParsing="false" onAction="#onLogout" prefHeight="32.0" prefWidth="32.0" style="-fx-background-image: url('logout.png'); -fx-background-position: center center; -fx-background-color: transparent;" />
          </children>
          <padding>
             <Insets left="20.0" right="20.0" />
@@ -26,11 +29,11 @@
    <center>
       <VBox alignment="CENTER" maxHeight="300.0" maxWidth="500.0" prefHeight="500.0" prefWidth="500.0" BorderPane.alignment="CENTER">
          <children>
-            <TextArea editable="false" prefHeight="186.0" prefWidth="500.0" text="Use esse espaço para colocar um logo ou informações como lembretes, atualizações, alertas ou até mesmo um controle de acesso." wrapText="true">
-               <font>
-                  <Font name="Calibri" size="29.0" />
-               </font>
-            </TextArea>
+            <ImageView fitHeight="200.0" fitWidth="200.0">
+               <image>
+                  <Image url="@logo.jpg" />
+               </image>
+            </ImageView>
             <Label fx:id="lbAcesso" text="Acesse o sistema">
                <font>
                   <Font name="System Bold" size="21.0" />

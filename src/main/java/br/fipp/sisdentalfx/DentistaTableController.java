@@ -3,6 +3,7 @@ package br.fipp.sisdentalfx;
 import br.fipp.sisdentalfx.db.dals.PessoaDAL;
 import br.fipp.sisdentalfx.db.entidades.Dentista;
 import br.fipp.sisdentalfx.db.entidades.Pessoa;
+import br.fipp.sisdentalfx.db.util.DB;
 import br.fipp.sisdentalfx.util.UIControl;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -13,6 +14,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -72,6 +74,18 @@ public class DentistaTableController implements Initializable {
         preencherTabela("upper(den_nome) like '%"+filtro+"%'");
     }
     public void onAlterar(ActionEvent actionEvent) {
+        int id;
+        Dentista d;
+        PessoaDAL pd = new PessoaDAL();
+        DentistaViewController dv = new DentistaViewController();
+
+        if(tabela.getSelectionModel().getSelectedItem() != null){
+
+            UIControl.abreModal("dentista-view.fxml");
+
+            id = tabela.getSelectionModel().getSelectedItem().getId();
+            d = (Dentista) pd.get(id, new Dentista());
+        }
     }
 
 

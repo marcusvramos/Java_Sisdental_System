@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox prefHeight="800.0" prefWidth="600.0" alignment="CENTER" style="-fx-padding: 10 0 0 0;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.fipp.sisdentalfx.DentistaViewController">
+<VBox prefHeight="450.0" prefWidth="600.0" alignment="CENTER" style="-fx-padding: 10 0 0 0;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.fipp.sisdentalfx.DentistaViewController">
     <children>
         <Label text="ID">
             <VBox.margin>

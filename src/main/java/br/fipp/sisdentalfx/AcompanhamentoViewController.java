@@ -3,6 +3,7 @@ package br.fipp.sisdentalfx;
 import br.fipp.sisdentalfx.db.dals.ConsultaDAL;
 import br.fipp.sisdentalfx.db.dals.PessoaDAL;
 import br.fipp.sisdentalfx.db.entidades.*;
+import br.fipp.sisdentalfx.singleton.Singleton;
 import br.fipp.sisdentalfx.util.PesquisaPaciente;
 import br.fipp.sisdentalfx.util.UIControl;
 import javafx.collections.FXCollections;
@@ -40,10 +41,12 @@ public class AcompanhamentoViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         dpDiaConsulta.setValue(LocalDate.now());
-        List <Pessoa>dentistas=new PessoaDAL().get("",new Dentista());
+        List <Pessoa> dentistas = new PessoaDAL().get("den_nome='"+Singleton.getInstance().getDentista().getNome() + "'", new Dentista());
         for(Pessoa dentista:dentistas) {
             cbDentista.getItems().add((Dentista)dentista);
         }
+        cbDentista.setValue((Dentista) dentistas.get(0));
+        preencherHorarios();
     }
 
     public void onPaciente(ActionEvent actionEvent) throws IOException {

@@ -14,6 +14,7 @@ public class Singleton {
     private Paciente paciente;
 
     private Dentista dentista;
+    private boolean modoEdicao = false;
     private Singleton() {
         consulta = new Consulta();
         paciente = new Paciente();
@@ -51,6 +52,14 @@ public class Singleton {
 
     public void setPaciente(Paciente paciente) {
         this.paciente = paciente;
+    }
+
+    public boolean getModoEdicao() {
+        return modoEdicao;
+    }
+
+    public void setModoEdicao(boolean modoEdicao) {
+        this.modoEdicao = modoEdicao;
     }
 
     public static Singleton getInstance() {

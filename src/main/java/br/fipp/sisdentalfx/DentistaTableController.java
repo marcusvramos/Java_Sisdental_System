@@ -4,6 +4,7 @@ import br.fipp.sisdentalfx.db.dals.PessoaDAL;
 import br.fipp.sisdentalfx.db.entidades.Dentista;
 import br.fipp.sisdentalfx.db.entidades.Pessoa;
 import br.fipp.sisdentalfx.db.util.DB;
+import br.fipp.sisdentalfx.singleton.Singleton;
 import br.fipp.sisdentalfx.util.UIControl;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -66,6 +67,7 @@ public class DentistaTableController implements Initializable {
         }
     }
     public void onNovoDentista(ActionEvent actionEvent) {
+        Singleton.getInstance().setModoEdicao(false);
         UIControl.abreModal("dentista-view.fxml");
         preencherTabela("");
     }
@@ -77,14 +79,13 @@ public class DentistaTableController implements Initializable {
         int id;
         Dentista d;
         PessoaDAL pd = new PessoaDAL();
-        DentistaViewController dv = new DentistaViewController();
 
         if(tabela.getSelectionModel().getSelectedItem() != null){
-
-            UIControl.abreModal("dentista-view.fxml");
-
             id = tabela.getSelectionModel().getSelectedItem().getId();
             d = (Dentista) pd.get(id, new Dentista());
+            Singleton.getInstance().setModoEdicao(true);
+            Singleton.getInstance().setDentista(d);
+            UIControl.abreModal("dentista-view.fxml");
         }
     }
 

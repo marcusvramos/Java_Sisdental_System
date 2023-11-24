@@ -7,7 +7,6 @@ public class DB  // classe Singleton
     {
         return con.conectar("jdbc:postgresql://localhost:5432/", 
                 "postgres", "postgres", "postgres123");
-        
     }
     static public Conexao getCon()
     {

@@ -20,7 +20,8 @@ public class ProcedimentoDAL implements IDAL<Procedimento> {
 
     @Override
     public boolean alterar(Procedimento entidade) {
-        String sql="update material set pro_desc='#1', pro_tempo=#2, pro_valor='#3' where pro_id="+entidade.getId();
+        String sql="update procedimento set pro_desc='#1', pro_tempo=#2, pro_valor='#3' where pro_id="+entidade.getId();
+        System.out.println("Id entidade na classe DAL: " + entidade.getId());
         sql=sql.replace("#1",entidade.getDescricao());
         sql=sql.replace("#2",Integer.toString(entidade.getTempo()));
         sql=sql.replace("#3",Double.toString(entidade.getValor()));
@@ -35,10 +36,12 @@ public class ProcedimentoDAL implements IDAL<Procedimento> {
     @Override
     public Procedimento get(int id) {
         Procedimento procedimento = null;
-        ResultSet rs=DB.getCon().consultar("select * from procedimento where pro_id="+id);
+        String sql = "select * from procedimento where pro_id=" + id;
+        System.out.println("Sql da DAL: " + sql);
+        ResultSet rs=DB.getCon().consultar(sql);
         try {
             if (rs.next())
-                procedimento = new Procedimento(rs.getString("pro_desc"), rs.getInt("pro_tempo"), rs.getDouble("pro_valor"));
+                procedimento = new Procedimento(rs.getInt("pro_id"), rs.getString("pro_desc"), rs.getInt("pro_tempo"), rs.getDouble("pro_valor"));
         }
         catch (Exception e){  }
         return procedimento;

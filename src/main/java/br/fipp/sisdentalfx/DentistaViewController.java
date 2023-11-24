@@ -64,7 +64,7 @@ public class DentistaViewController implements Initializable {
                     tfEmail.getText()
             );
 
-            if (!new PessoaDAL().alterar(dentista)) {
+            if (!new PessoaDAL().gravar(dentista)) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Erro ao gravar dentista " + DB.getCon().getMensagemErro());
                 alert.showAndWait();
@@ -74,16 +74,23 @@ public class DentistaViewController implements Initializable {
     }
 
     private void alterarDentista(javafx.event.ActionEvent e){
+        int id = Singleton.getInstance().getDentista().getId();
         Dentista dentista = new Dentista(
+                id,
                 tfnome.getText(),
                 Integer.parseInt(tfcro.getText()),
                 tfFone.getText(),
                 tfEmail.getText()
         );
 
-        if (!new PessoaDAL().alterar(dentista)) {
+        if(new PessoaDAL().alterar(dentista)){
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setContentText("Dentista atualizado com sucesso!");
+            alert.showAndWait();
+        }
+        else{
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Erro ao alterar dentista " + DB.getCon().getMensagemErro());
+            alert.setContentText("Erro ao gravar dentista " + DB.getCon().getMensagemErro());
             alert.showAndWait();
         }
         ((Control) e.getSource()).getScene().getWindow().hide();

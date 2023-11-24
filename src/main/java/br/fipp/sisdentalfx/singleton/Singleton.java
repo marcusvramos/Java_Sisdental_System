@@ -1,8 +1,6 @@
 package br.fipp.sisdentalfx.singleton;
 
-import br.fipp.sisdentalfx.db.entidades.Consulta;
-import br.fipp.sisdentalfx.db.entidades.Dentista;
-import br.fipp.sisdentalfx.db.entidades.Paciente;
+import br.fipp.sisdentalfx.db.entidades.*;
 
 public class Singleton {
     private static Singleton instance;
@@ -14,12 +12,32 @@ public class Singleton {
     private Paciente paciente;
 
     private Dentista dentista;
+    private Procedimento procedimento;
+    private Material material;
     private boolean modoEdicao = false;
     private Singleton() {
         consulta = new Consulta();
         paciente = new Paciente();
         dentista = new Dentista();
+        procedimento = new Procedimento();
+        material = new Material();
         nomeUsuario = "";
+    }
+
+    public Procedimento getProcedimento() {
+        return procedimento;
+    }
+
+    public void setProcedimento(Procedimento procedimento) {
+        this.procedimento = procedimento;
+    }
+
+    public Material getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(Material material) {
+        this.material = material;
     }
 
     public Consulta getConsulta() {

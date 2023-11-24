@@ -166,6 +166,7 @@ public class PessoaDAL implements IDAL<Pessoa>{
         }
         catch (Exception e){  };
         System.out.println(sql);
+        System.out.println(pessoas.get(0));
         return pessoas;
     }
 }

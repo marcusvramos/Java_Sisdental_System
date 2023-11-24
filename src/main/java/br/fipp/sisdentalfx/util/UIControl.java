@@ -45,9 +45,10 @@ public class UIControl {
     }
     public static void abreHelp(String uri) {
         try {
-            WebView webview = new WebView();
-            webview.getEngine().load(uri);
-            Scene scene = new Scene(webview);
+            WebView webView = new WebView();
+            webView.getEngine().load(uri);
+
+            Scene scene = new Scene(webView, 1280, 768);
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);

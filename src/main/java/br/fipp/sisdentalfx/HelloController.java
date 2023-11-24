@@ -1,8 +1,10 @@
 package br.fipp.sisdentalfx;
 
 import br.fipp.sisdentalfx.db.dals.PessoaDAL;
+import br.fipp.sisdentalfx.db.entidades.Dentista;
 import br.fipp.sisdentalfx.db.entidades.Pessoa;
 import br.fipp.sisdentalfx.db.entidades.Usuario;
+import br.fipp.sisdentalfx.singleton.Singleton;
 import br.fipp.sisdentalfx.util.UIControl;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -60,15 +62,15 @@ public class HelloController implements Initializable {
     }
 
     public boolean logar(String usuariologin, String senha) {
-
+        Singleton singleton = Singleton.getInstance();
         List<Pessoa> usuarios= new PessoaDAL().get("uso_nome like '%"+usuariologin+"%'", new Usuario());
-
         Usuario usuario;
         boolean logado = false;
         if(usuarios.size() > 0)
         {
             usuario=(Usuario) usuarios.get(0);
             if (usuario.getSenha().equals(senha)) {
+                singleton.setDentista(new Dentista(usuario.getId(),usuario.getNome(), 0, "", ""));
                 System.out.println("senha bateu");
                 UIControl.usuario=usuario.getNome();
                 UIControl.nivel=usuario.getNivel();

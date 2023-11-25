@@ -4,6 +4,7 @@ import br.fipp.sisdentalfx.db.dals.PessoaDAL;
 import br.fipp.sisdentalfx.db.entidades.Paciente;
 import br.fipp.sisdentalfx.db.entidades.Pessoa;
 import br.fipp.sisdentalfx.db.util.DB;
+import br.fipp.sisdentalfx.singleton.Singleton;
 import br.fipp.sisdentalfx.util.MaskFieldUtil;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -73,9 +74,14 @@ public class PacienteViewController implements Initializable {
         MaskFieldUtil.cpfField(tfCpf);
         MaskFieldUtil.cepField(tfCep);
         MaskFieldUtil.foneField(tfTelefone);
+        insereDadosInput();
         tfCancelar.setOnAction(e -> ((Control)e.getSource()).getScene().getWindow().hide());
-        tfConfirmar.setOnAction(e -> gravarPaciente(e));
-
+        if(Singleton.getInstance().getModoEdicao() == false)
+            tfConfirmar.setOnAction(e -> gravarPaciente(e));
+        else{
+            tfConfirmar.setText("Atualizar");
+            tfConfirmar.setOnAction(e -> atualizarPaciente(e));
+        }
         tfCep.setOnKeyTyped(e -> {
             if(tfCep.getText().length() == 9){
                 Task task = new Task() {
@@ -142,5 +148,51 @@ public class PacienteViewController implements Initializable {
         }
 
         ((Control)e.getSource()).getScene().getWindow().hide();
+    }
+
+    private void atualizarPaciente(ActionEvent e){
+        int id = Singleton.getInstance().getPaciente().getId();
+        Paciente p = new Paciente(
+                id,
+                tfNome.getText(),
+                tfCpf.getText(),
+                tfCep.getText(),
+                tfRua.getText(),
+                tfNumero.getText(),
+                tfBairro.getText(),
+                tfCidade.getText(),
+                tfUf.getText(),
+                tfTelefone.getText(),
+                tfEmail.getText(),
+                tfHistorico.getText()
+        );
+
+        if(new PessoaDAL().alterar(p)){
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setContentText("Paciente atualizado com sucesso!");
+            alert.showAndWait();
+        }
+        else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Erro ao atualizar paciente " + DB.getCon().getMensagemErro());
+            alert.showAndWait();
+        }
+        ((Control) e.getSource()).getScene().getWindow().hide();
+    }
+
+    public void insereDadosInput(){
+        if(Singleton.getInstance().getModoEdicao() == true) {
+            tfBairro.setText(Singleton.getInstance().getPaciente().getBairro());
+            tfCep.setText(Singleton.getInstance().getPaciente().getCep());
+            tfCidade.setText(Singleton.getInstance().getPaciente().getCidade());
+            tfCpf.setText(Singleton.getInstance().getPaciente().getCpf());
+            tfEmail.setText(Singleton.getInstance().getPaciente().getEmail());
+            tfHistorico.setText(Singleton.getInstance().getPaciente().getHisto());
+            tfNome.setText(Singleton.getInstance().getPaciente().getNome());
+            tfNumero.setText(Singleton.getInstance().getPaciente().getNumero());
+            tfRua.setText(Singleton.getInstance().getPaciente().getRua());
+            tfTelefone.setText(Singleton.getInstance().getPaciente().getFone());
+            tfUf.setText(Singleton.getInstance().getPaciente().getUf());
+        }
     }
 }

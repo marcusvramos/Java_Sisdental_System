@@ -3,6 +3,7 @@ package br.fipp.sisdentalfx;
 import br.fipp.sisdentalfx.db.dals.PessoaDAL;
 import br.fipp.sisdentalfx.db.dals.ProcedimentoDAL;
 import br.fipp.sisdentalfx.db.entidades.Procedimento;
+import br.fipp.sisdentalfx.singleton.Singleton;
 import br.fipp.sisdentalfx.util.UIControl;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -40,6 +41,7 @@ public class ProcedimentoTableController implements Initializable {
         this.tabela.setItems(FXCollections.observableArrayList(procedimentos));
     }
     public void onNovoProcedimento(javafx.event.ActionEvent actionEvent) {
+        Singleton.getInstance().setModoEdicao(false);
         UIControl.abreModal("procedimento-view.fxml");
         preencherTabela("");
     }
@@ -50,6 +52,17 @@ public class ProcedimentoTableController implements Initializable {
     }
 
     public void onAlterar(javafx.event.ActionEvent actionEvent) {
+        int id;
+        Procedimento p;
+        ProcedimentoDAL pd = new ProcedimentoDAL();
+
+        if(tabela.getSelectionModel().getSelectedItem() != null){
+            id = tabela.getSelectionModel().getSelectedItem().getId();
+            p = pd.get(id);
+            Singleton.getInstance().setModoEdicao(true);
+            Singleton.getInstance().setProcedimento(p);
+            UIControl.abreModal("procedimento-view.fxml");
+        }
     }
 
     public void onApagar(javafx.event.ActionEvent actionEvent) {

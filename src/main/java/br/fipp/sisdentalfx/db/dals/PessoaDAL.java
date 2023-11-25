@@ -48,11 +48,12 @@ public class PessoaDAL implements IDAL<Pessoa>{
         String sql="update ";
         if(entidade instanceof Dentista)
         {
-            sql+="dentista set den_nome='#1',den_cro=#2,den_fone='#3',den_email='#4' where den_id="+entidade.getId();
+            sql+="dentista set den_nome='#1',den_cro=#2,den_fone='#3',den_email='#4' where den_id="+ entidade.getId();
             sql=sql.replace("#1",entidade.getNome());
             sql=sql.replace("#2",""+((Dentista) entidade).getCro());
             sql=sql.replace("#3",((Dentista) entidade).getFone());
             sql=sql.replace("#4",((Dentista) entidade).getEmail());
+            System.out.println("Sql de alterar dentista " + sql);
         }
         else if(entidade instanceof Usuario){
             sql+="usuario set uso_nome='#1',uso_nivel=#2,uso_senha='#3' where uso_id="+entidade.getId();;

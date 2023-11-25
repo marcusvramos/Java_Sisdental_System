@@ -3,6 +3,7 @@ package br.fipp.sisdentalfx;
 import br.fipp.sisdentalfx.db.dals.PessoaDAL;
 import br.fipp.sisdentalfx.db.entidades.Paciente;
 import br.fipp.sisdentalfx.db.entidades.Pessoa;
+import br.fipp.sisdentalfx.singleton.Singleton;
 import br.fipp.sisdentalfx.util.UIControl;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -46,11 +47,23 @@ public class PacienteTableController implements Initializable {
     }
 
     public void onNovoPaciente(ActionEvent actionEvent) {
+        Singleton.getInstance().setModoEdicao(false);
         UIControl.abreModal("paciente-view.fxml");
         preencherTabela("");
     }
 
     public void onAlterar(ActionEvent actionEvent) {
+        int id;
+        Paciente p;
+        PessoaDAL pd = new PessoaDAL();
+
+        if(tabela.getSelectionModel().getSelectedItem() != null){
+            id = tabela.getSelectionModel().getSelectedItem().getId();
+            p = (Paciente) pd.get(id, new Paciente());
+            Singleton.getInstance().setModoEdicao(true);
+            Singleton.getInstance().setPaciente(p);
+            UIControl.abreModal("paciente-view.fxml");
+        }
     }
 
     public void onApagar(ActionEvent actionEvent) {

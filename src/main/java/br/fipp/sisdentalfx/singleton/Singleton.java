@@ -4,6 +4,7 @@ import br.fipp.sisdentalfx.db.entidades.Consulta;
 import br.fipp.sisdentalfx.db.entidades.Dentista;
 import br.fipp.sisdentalfx.db.entidades.Horario;
 import br.fipp.sisdentalfx.db.entidades.Paciente;
+import br.fipp.sisdentalfx.db.entidades.*;
 
 public class Singleton {
     private static Singleton instance;
@@ -16,24 +17,37 @@ public class Singleton {
 
     private Dentista dentista;
 
-    public static void setInstance(Singleton instance) {
-        Singleton.instance = instance;
-    }
-
-    public Horario getHorario() {
-        return horario;
-    }
-
-    public void setHorario(Horario horario) {
-        this.horario = horario;
-    }
-
     private Horario horario;
+
+    private Procedimento procedimento;
+
+    private Material material;
+
+    private boolean modoEdicao = false;
+    
     private Singleton() {
         consulta = new Consulta();
         paciente = new Paciente();
         dentista = new Dentista();
+        procedimento = new Procedimento();
+        material = new Material();
         nomeUsuario = "";
+    }
+
+    public Procedimento getProcedimento() {
+        return procedimento;
+    }
+
+    public void setProcedimento(Procedimento procedimento) {
+        this.procedimento = procedimento;
+    }
+
+    public Material getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(Material material) {
+        this.material = material;
     }
 
     public Consulta getConsulta() {
@@ -67,6 +81,27 @@ public class Singleton {
     public void setPaciente(Paciente paciente) {
         this.paciente = paciente;
     }
+
+    public boolean getModoEdicao() {
+        return modoEdicao;
+    }
+
+    public void setModoEdicao(boolean modoEdicao) {
+        this.modoEdicao = modoEdicao;
+    }
+
+    public static void setInstance(Singleton instance) {
+        Singleton.instance = instance;
+    }
+
+    public Horario getHorario() {
+        return horario;
+    }
+
+    public void setHorario(Horario horario) {
+        this.horario = horario;
+    }
+
 
     public static Singleton getInstance() {
         if (instance == null) {

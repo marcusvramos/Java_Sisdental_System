@@ -2,6 +2,7 @@ package br.fipp.sisdentalfx;
 
 import br.fipp.sisdentalfx.db.dals.MaterialDAL;
 import br.fipp.sisdentalfx.db.entidades.Material;
+import br.fipp.sisdentalfx.singleton.Singleton;
 import br.fipp.sisdentalfx.util.UIControl;
 import javafx.collections.FXCollections;
 import javafx.fxml.Initializable;
@@ -36,6 +37,7 @@ public class MaterialTableController implements Initializable {
         this.tabela.setItems(FXCollections.observableArrayList(materiais));
     }
     public void onNovoMaterial(javafx.event.ActionEvent actionEvent) {
+        Singleton.getInstance().setModoEdicao(false);
         UIControl.abreModal("material-view.fxml");
         preencherTabela("");
     }
@@ -46,6 +48,17 @@ public class MaterialTableController implements Initializable {
     }
 
     public void onAlterar(javafx.event.ActionEvent actionEvent) {
+        int id;
+        Material m;
+        MaterialDAL md = new MaterialDAL();
+
+        if(tabela.getSelectionModel().getSelectedItem() != null){
+            id = tabela.getSelectionModel().getSelectedItem().getId();
+            m = md.get(id);
+            Singleton.getInstance().setModoEdicao(true);
+            Singleton.getInstance().setMaterial(m);
+            UIControl.abreModal("material-view.fxml");
+        }
     }
 
     public void onApagar(javafx.event.ActionEvent actionEvent) {

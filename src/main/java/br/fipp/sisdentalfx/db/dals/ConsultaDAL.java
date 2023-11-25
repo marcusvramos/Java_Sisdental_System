@@ -8,6 +8,7 @@ import br.fipp.sisdentalfx.db.util.DB;
 import javafx.scene.control.Alert;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -133,6 +134,27 @@ public class ConsultaDAL implements IDAL<Consulta>{
     }
     @Override
     public List<Consulta> get(String filtro) {
-        return null;
+        List<Consulta> consultas = new ArrayList<>();
+        String sql = "select * from consulta";
+        if(!filtro.isEmpty())
+            sql+=" where "+filtro;
+        ResultSet rs = DB.getCon().consultar(sql);
+        try {
+            while(rs.next()){
+                consultas.add(new Consulta(
+                        rs.getInt("con_id"),
+                        rs.getDate("con_data").toLocalDate(),
+                        rs.getInt("con_horario"),
+                        (Dentista) new PessoaDAL().get(rs.getInt("den_id"),new Dentista()),
+                        (Paciente) new PessoaDAL().get(rs.getInt("pac_id"),new Paciente()),
+                        rs.getString("con_relato"),
+                        rs.getBoolean("con_efetivado")
+                ));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return consultas;
     }
+
 }

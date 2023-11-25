@@ -74,7 +74,7 @@ public class AcompanhamentoViewController implements Initializable {
     public void onProcedimento(ActionEvent actionEvent) {
         BoxBlur bb = new BoxBlur(15,15,10);
         dpDiaConsulta.getScene().getRoot().setEffect(bb);
-        UIControl.abreModal("procedimento-table-view.fxml");
+        UIControl.abreModal("acompanhamento-form.fxml");
         dpDiaConsulta.getScene().getRoot().setEffect(null);
     }
     public void onTrocouDentista(ActionEvent actionEvent) {
@@ -82,22 +82,11 @@ public class AcompanhamentoViewController implements Initializable {
     }
 
     public void onAgendar(ActionEvent actionEvent) {
-        // abrir janela selecionar um paciente
-        PesquisaPaciente pesquisa = new PesquisaPaciente();
-        Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setScene(new Scene(pesquisa));
-        stage.setWidth(400);
-        stage.setHeight(600);
-        stage.showAndWait();
-
-        Paciente paciente = pesquisa.getPaciente();
-        if(paciente != null) {
-            int hora = tableView.getSelectionModel().getSelectedItem().getHora();
-            new ConsultaDAL().gravar(new Consulta(dpDiaConsulta.getValue(), hora, cbDentista.getValue(), paciente, ""));
-            preencherHorarios();
+        Horario horario = (Horario) tableView.getSelectionModel().getSelectedItem();
+        if(horario != null){
+            Singleton.getInstance().setHorario(horario);
+            UIControl.abreModal("relato-view.fxml");
         }
-
     }
 
     public void onCancelarAgendamento(ActionEvent actionEvent) {

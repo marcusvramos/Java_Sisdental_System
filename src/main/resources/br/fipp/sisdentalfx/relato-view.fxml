@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.fipp.sisdentalfx.AcompanhamentoFormController">
+   <padding>
+      <Insets bottom="5.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+   <Label text="Relato">
+      <VBox.margin>
+         <Insets top="5.0" />
+      </VBox.margin>
+      <font>
+         <Font size="13.0" />
+      </font>
+   </Label>
+   <TextArea fx:id="tfRelato" prefHeight="200.0" prefWidth="200.0" />
+   <HBox alignment="CENTER" prefHeight="66.0" prefWidth="560.0" spacing="40.0">
+      <Button fx:id="tfConf" minHeight="30.0" mnemonicParsing="false" onAction="#onConfirmar" prefWidth="90.0" style="-fx-background-color: lightblue;" text="Confirmar" />
+      <Button fx:id="tfCancelar" minHeight="30.0" mnemonicParsing="false" onAction="#onCancelar" prefWidth="90.0" style="-fx-background-color: salmon;" text="Cancelar" />
+   </HBox>
+</VBox>

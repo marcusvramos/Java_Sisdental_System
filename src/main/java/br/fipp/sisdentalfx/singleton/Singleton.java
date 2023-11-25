@@ -2,6 +2,7 @@ package br.fipp.sisdentalfx.singleton;
 
 import br.fipp.sisdentalfx.db.entidades.Consulta;
 import br.fipp.sisdentalfx.db.entidades.Dentista;
+import br.fipp.sisdentalfx.db.entidades.Horario;
 import br.fipp.sisdentalfx.db.entidades.Paciente;
 
 public class Singleton {
@@ -14,6 +15,20 @@ public class Singleton {
     private Paciente paciente;
 
     private Dentista dentista;
+
+    public static void setInstance(Singleton instance) {
+        Singleton.instance = instance;
+    }
+
+    public Horario getHorario() {
+        return horario;
+    }
+
+    public void setHorario(Horario horario) {
+        this.horario = horario;
+    }
+
+    private Horario horario;
     private Singleton() {
         consulta = new Consulta();
         paciente = new Paciente();
